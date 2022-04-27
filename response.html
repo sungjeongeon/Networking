@@ -1,0 +1,30 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <style>
+            .character {color:black;}
+            .word {color:gray;}
+        </style>
+        <script>
+            var req = new XMLHttpRequest();
+            req.onreadystatechange = function a(){
+                console.log(this.readyState, this.status);
+                if(this.readyState == 4 && this.status == 200)
+                /*모든 응답이 수신되고, 응답코드가 OK일 때*/
+                {
+                    console.log(this.response);
+                    var data = JSON.parse(this.response);
+                    for(var i in data) {
+                        var t = document.getElementById("template").cloneNode(true);
+                        t.removeAttribute("id");
+                        t.children[0].innerText = data[i].id;
+                        t.children[1].innerText = data[i].msg;
+                        document.body.appendChild(t);
+                    }
+                }
+            }
+            req.open("GET", "./json_data.txt");
+            requ.send();
+        </script>
+    </head>
+</html>
